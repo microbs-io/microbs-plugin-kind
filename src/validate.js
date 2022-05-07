@@ -3,7 +3,7 @@
  */
 
 // Third-party packages
-const hasbin = require('hasbin')
+const commandExists = require('commandExists')
 const semver = require('semver')
 
 // Main packages
@@ -13,7 +13,7 @@ const { logger, utils } = require('@microbs.io/core')
  * Validate kind installation
  */
 const validateKindInstallation = () => {
-  if(hasbin.sync('kind'))
+  if(commandExistsSync('kind'))
     return {
       success: true,
       message: 'kind is installed'
