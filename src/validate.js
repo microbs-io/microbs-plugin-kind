@@ -13,7 +13,7 @@ const { logger, utils } = require('@microbs.io/core')
  * Validate kind installation
  */
 const validateKindInstallation = () => {
-  if(commandExistsSync('kind'))
+  if(commandExists.sync('kind'))
     return {
       success: true,
       message: 'kind is installed'
