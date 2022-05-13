@@ -14,15 +14,15 @@ const { logger, utils } = require('@microbs.io/core')
  */
 const validateKindInstallation = () => {
   if(commandExists.sync('kind'))
-    return {
+    return [{
       success: true,
       message: 'kind is installed'
-    }
+    }]
   else
-    return {
-      success: true,
+    return [{
+      success: false,
       message: 'kind is not installed'
-    }
+    }]
 }
 
 /**
@@ -35,15 +35,15 @@ const validateKindVersion = () => {
       versionActual = semver.clean(result.stdout.match(/kind v([^ ]+) /)[1])
       versionRequired = semver.clean('0.12.0')
       if (semver.gte(versionActual, versionRequired))
-        return {
+        return [{
           success: true,
           message: `kind is correct version [using=${versionActual}, required>=${versionRequired}]`
-        }
+        }]
       else
-        return {
+        return [{
           success: false,
           message: `kind is incorrect version [using=${versionActual}, required>=${versionRequired}]`
-        }
+        }]
     } catch (e) {
       logger.error(e)
     }
@@ -54,7 +54,11 @@ const validateKindVersion = () => {
 
 module.exports = async () => {
   const results = []
-  results.push(validateKindInstallation())
-  results.push(validateKindVersion())
+  validateKindInstallation().forEach(
+    (result) => results.push(result)
+  )
+  validateKindVersion().forEach(
+    (result) => results.push(result)
+  )
   return results
 }
